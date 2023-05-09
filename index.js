@@ -1,27 +1,45 @@
-var game = new Phaser.Game(480, 320, Phaser.Canvas, null, {
-    preload: preload, 
-    create: create, 
-    update: update
-  });
-  let owl;
-  let background;
-  let platform;
-
-  function preload() {
-
-    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-    game.scale.pageAlignHorizontally = true;
-    game.scale.pageAlignVertically = true;
-    game.stage.backgroundColor = '#eee';
-    game.load.image('owl', 'assets/owl.png');
-    game.load.image('background', 'assets/gorod-demo.png');
-    game.load.image('platform', 'assets/ground_grass.png');
-    
+class Scene extends Phaser.Scene {
+  preload() {
+    this.load.image("owl", "assets/owl.png");
+    this.load.image("background", "assets/gorod-demo.png");
+    this.load.image("platform", "assets/ground_grass.png");
   }
-  function create() {
-    owl = game.add.sprite(50, 50, 'owl');
-    background = game.add.sprite(0, 0, 'background');
-    platform = game.add.sprite(100, 100, 'platform');
-    
+
+  create() {
+    this.add.sprite(0, 0, "background").setScale(1.2);
+    //this.add.sprite(50, 50, "owl").setScale(0.4);
+   // this.add.sprite(100, 100, "platform").setScale(0.2);
+   const platforms = this.physics.add.staticGroup()
+   for (let i=0; i<5; ++i){
+    const x = Phaser.Math.Between(0, 320);
+    const y = 50+100*i;
+    const platform = platforms.create(x, y, 'platform');
+    platform.scale = 0.2;
+   }
+    const player = this.physics.add.sprite(100, 0, 'owl').setScale(0.4);
+    this.physics.add.collider(platforms, player);
+    //player.setBounce(0.2);
+    //player.setCollideWorldBounds(true);
   }
-  function update() {}
+
+  update() {
+
+  }
+
+}
+
+const config = {
+  type: Phaser.AUTO,
+  width: 320,
+  height: 500,
+  physics: {
+    default: 'arcade',
+    arcade: {
+        gravity: { y: 300 },
+        debug: false
+    }
+  },
+  scene: Scene,
+};
+
+const game = new Phaser.Game(config);
