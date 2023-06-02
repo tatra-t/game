@@ -7,8 +7,8 @@ class Game extends Phaser.Scene {
   score = 0;
   scoreMaxText;
   gameOver = false;
-  scoreMax = 0;
-  max=0;
+  scoreMax=0;
+  max;
   constructor() {
     super("Game");
   }
@@ -110,33 +110,14 @@ class Game extends Phaser.Scene {
    }
 
   }
-  collectPlatforms() {
-   /* if (localStorage.getItem("max")) {
-    this.max = localStorage.getItem("max");
-    const valueMax = `Score Max: ${this.max}`;
-    this.scoreMaxText.text = valueMax;
-  }*/
+  collectPlatforms(player, platforms) {
     this.score++;
-      const value = `Score: ${this.score}`;
-      this.scoreText.text = value;
+      this.scoreText.text = `Score: ${this.score}`;
       localStorage.setItem('score', this.score );
-    /*if (!localStorage.getItem("max")) {
-      localStorage.setItem('max', this.score);
-  }
       
-    if (this.max<value){
-      localStorage.removeItem('max');
-      const maxStore = localStorage.getItem("score");
-      localStorage.setItem('max', maxStore );
-      this.scoreMax = localStorage.getItem("max");
-      const valueMax = `Score Max: ${this.scoreMax}`;
-      this.scoreMaxText.text = valueMax; 
-    }*/
-    
-    
-      
-      
-  } 
+    }
+
+   
   horizontalWrap(sprite) { 
     const halfWidth = sprite.displayWidth;
     const gameWidth = this.scale.width;
@@ -168,6 +149,7 @@ class Menu extends Phaser.Scene {
   }
 
   create() {
+    
     this.add.text(100, 100, "START", {
       fontSize: 36,
       color: "#fff"
@@ -176,6 +158,11 @@ class Menu extends Phaser.Scene {
     this.input.on("pointerdown", (pointer) => {
       this.scene.start("Game");
     });
+    this.addLocalStorageMax();
+  }
+  addLocalStorageMax() {
+  localStorage.setItem('max', this.scoreMax=0);
+  
   }
 }
 
@@ -192,7 +179,20 @@ class EndGameScene extends Phaser.Scene {
     this.input.on("pointerdown", (pointer) => {
       this.scene.start("Game");
     });
+    this.maxLocalStorage();
   }
+  maxLocalStorage(){
+    let a = localStorage.getItem("max");
+    let b = localStorage.getItem('score');
+    if (b>a) {
+      localStorage.removeItem('max');
+      localStorage.setItem('max', b);
+    }
+    
+    localStorage.removeItem('score');
+    this.score =0;
+  }
+
 }
 
 
