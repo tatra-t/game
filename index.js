@@ -9,6 +9,8 @@ class Game extends Phaser.Scene {
   gameOver = false;
   scoreMax=0;
   max;
+  lastPlatformPosition;
+  
   constructor() {
     super("Game");
   }
@@ -70,8 +72,14 @@ class Game extends Phaser.Scene {
     // Додаємо відслідковування подій стрілочок
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    this.physics.add.collider(this.platforms, this.player);
-    this.physics.add.overlap(this.platforms, this.player, this.collectPlatforms, null, this) ;
+    this.physics.add.collider(
+      this.platforms,
+      this.player,
+      this.collectPlatforms,
+      null,
+      this
+    );
+    // this.physics.add.overlap(this.platforms, this.player, this.collectPlatforms, null, this) ;
     this.player.body.checkCollision.up = false;
     this.player.body.checkCollision.left = false;
     this.player.body.checkCollision.right = false;
@@ -110,12 +118,19 @@ class Game extends Phaser.Scene {
    }
 
   }
-  collectPlatforms(player, platforms) {
-    this.score++;
+  collectPlatforms(player, platform) {
+    if (
+      player.body.touching.down &&
+      platform.body.touching.up &&
+      this.lastPlatformPosition !== platform.y
+    ) {
+      this.score++;
       this.scoreText.text = `Score: ${this.score}`;
-      localStorage.setItem('score', this.score );
-      
+      localStorage.setItem("score", this.score);
+      this.lastPlatformPosition = platform.y;
     }
+  }
+
 
    
   horizontalWrap(sprite) { 
