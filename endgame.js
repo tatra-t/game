@@ -1,4 +1,4 @@
-import {maxLocalStorage} from './localStorage.js';
+import {addMaxInLocalStorage} from './localStorage.js';
 export class EndGameScene extends Phaser.Scene {
     constructor() {
       super("EndGameScene");
@@ -12,7 +12,7 @@ export class EndGameScene extends Phaser.Scene {
       this.input.on("pointerdown", (pointer) => {
         this.scene.start("Game");
       });
-      maxLocalStorage();
+      addMaxInLocalStorage();
     }
   
   }
