@@ -6,7 +6,7 @@
     platforms;
     player;
     scoreText;
-    score = 0;
+    score;
     scoreMaxText;
     gameOver = false;
     lastPlatformPosition;
@@ -33,7 +33,7 @@
       .setScale(1.2)
       .setScrollFactor(1, 0);
   
-  
+    this.score =0; 
       // Додаємо платформи
       this.platforms = this.physics.add.staticGroup();
   
@@ -121,6 +121,7 @@
         platform.body.touching.up &&
         this.lastPlatformPosition !== platform.y
       ) {
+        
         this.score++;
         this.scoreText.text = `Score: ${this.score}`;
         addScoreInLocal(this.score); 

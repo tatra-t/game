@@ -6,7 +6,7 @@ export class Menu extends Phaser.Scene {
     }
   
     create() {
-      
+
       this.add.text(100, 100, "START", {
         fontSize: 36,
         color: "#fff"
