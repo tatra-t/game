@@ -1,11 +1,11 @@
-let max;
+
 
 export function addScoreInLocal (score){
     localStorage.setItem('score', score);
 }
 export function addLocalStorageMax() {
     if (localStorage.getItem('max')!==null) {
-    max = localStorage.getItem('max');
+    let max = localStorage.getItem('max');
         return max;
     } else{
         localStorage.setItem('max', 0); 

@@ -1,6 +1,5 @@
- import{addScoreInLocal} from './localStorage.js';
- import {addMaxInLocalStorage} from './localStorage.js';
- import { addLocalStorageMax } from './localStorage.js';
+ import{addScoreInLocal, addMaxInLocalStorage,addLocalStorageMax} from './localStorage.js';
+ 
  export class Game extends Phaser.Scene {
     // Зберігаємо платформи, гравця у this нашого класу, щоб можно було звернутися з будь-якого методу
     cursors;
