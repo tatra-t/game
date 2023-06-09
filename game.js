@@ -1,4 +1,4 @@
- import{addScoreInLocal, addMaxInLocalStorage,addLocalStorageMax} from './localStorage.js';
+ import{addScoreInLocal, addMaxInLocalStorage, getMaxScore, resetScore} from './localStorage.js';
  
  export class Game extends Phaser.Scene {
     // Зберігаємо платформи, гравця у this нашого класу, щоб можно було звернутися з будь-якого методу
@@ -86,7 +86,9 @@
     }
   
     update() {
-        this.scoreMaxText.text = `Score Max: ${addLocalStorageMax()}`;
+      resetScore();
+      
+      this.scoreMaxText.text = `Score Max: ${getMaxScore()}`;
       if (this.cursors.left.isDown) {
         this.player.setVelocityX(-200);
       } else if (this.cursors.right.isDown) {
