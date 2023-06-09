@@ -1,22 +1,23 @@
-
+const LOCAL_STORAGE_KEY = "score";
+const LOCAL_STORAGE_MAX_KEY = "max";
 
 export function addScoreInLocal (score){
-    localStorage.setItem('score', score);
+    localStorage.setItem(LOCAL_STORAGE_KEY, score);
 }
 export function addLocalStorageMax() {
-    if (localStorage.getItem('max')!==null) {
-    let max = localStorage.getItem('max');
+    if (localStorage.getItem(LOCAL_STORAGE_MAX_KEY)!==null) {
+    let max = localStorage.getItem(LOCAL_STORAGE_MAX_KEY);
         return max;
     } else{
-        localStorage.setItem('max', 0); 
+        localStorage.setItem(LOCAL_STORAGE_MAX_KEY, 0); 
     };
     
 }
 export function addMaxInLocalStorage() {
-    if (+localStorage.getItem('score') > +localStorage.getItem('max')) {
-        localStorage.removeItem('max');
-        let maxLocal = localStorage.getItem('score');
-        localStorage.setItem('max', maxLocal);
+    if (+localStorage.getItem(LOCAL_STORAGE_KEY) > +localStorage.getItem(LOCAL_STORAGE_MAX_KEY)) {
+        localStorage.removeItem(LOCAL_STORAGE_MAX_KEY);
+        let maxLocal = localStorage.getItem(LOCAL_STORAGE_KEY);
+        localStorage.setItem(LOCAL_STORAGE_MAX_KEY, maxLocal);
         return maxLocal;
     }
 }
